@@ -1,0 +1,6 @@
+#wp-ollama-chatbot { max-width: 400px; margin: 20px auto; font-family: Arial, sans-serif; }
+.ollama-chat-window { border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px; background: #fafafa; }
+.ollama-chat-input { width: 70%; padding: 8px; margin-top: 5px; }
+.ollama-chat-send { width: 25%; padding: 8px; margin-top: 5px; background: #0073aa; color: #fff; border: none; cursor: pointer; }
+.ollama-msg-user { text-align: right; color: #0073aa; margin: 5px 0; }
+.ollama-msg-bot { text-align: left; color: #333; margin: 5px 0; }
