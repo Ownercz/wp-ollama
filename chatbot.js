@@ -18,7 +18,8 @@ jQuery(document).ready(function($){
         $input.val('');
         $.post(wpOllama.ajax_url, { action: 'wp_ollama_chat', message: msg }, function(res){
             if (res.success && res.data && res.data.response) {
-                appendMessage('bot', res.data.response);
+                var botReply = res.data.response.content || 'Error: Empty response.';
+                appendMessage('bot', botReply);
             } else {
                 appendMessage('bot', 'Error: Could not get response.');
             }
