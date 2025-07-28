@@ -48,5 +48,10 @@ function wp_ollama_chat_handler() {
         wp_send_json_error('API request failed');
     }
     $data = json_decode(wp_remote_retrieve_body($response), true);
-    wp_send_json_success($data);
+    // Extract the actual response text for the frontend
+    $bot_response = isset($data['message']) ? $data['message'] : (isset($data['response']) ? $data['response'] : '');
+    if (!$bot_response) {
+        wp_send_json_error('No response from API');
+    }
+    wp_send_json_success(array('response' => $bot_response));
 }
