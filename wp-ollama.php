@@ -33,9 +33,12 @@ function wp_ollama_chat_handler() {
     if (!$message) {
         wp_send_json_error('No message provided');
     }
-    // Replace with your Ollama API endpoint and key if needed
+    // Always use gemma3:4b model
     $api_url = 'http://ai.lipovcan.cz:11434/api/chat';
-    $body = json_encode(array('message' => $message));
+    $body = json_encode(array(
+        'model' => 'gemma3:4b',
+        'message' => $message
+    ));
     $response = wp_remote_post($api_url, array(
         'body' => $body,
         'headers' => array('Content-Type' => 'application/json'),
