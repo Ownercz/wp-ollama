@@ -53,5 +53,6 @@ function wp_ollama_chat_handler() {
     if (!$bot_response) {
         wp_send_json_error('No response from API');
     }
-    wp_send_json_success(array('response' => $bot_response));
+    // Always return response as an object with role and content
+    wp_send_json_success(array('response' => array('role' => 'assistant', 'content' => $bot_response)));
 }
