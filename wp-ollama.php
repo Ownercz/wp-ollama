@@ -45,13 +45,20 @@ function wp_ollama_chat_handler() {
         'timeout' => 30
     ));
     if (is_wp_error($response)) {
-        wp_send_json_error('API request failed');
+        wp_send_json_error('API request failed: ' . $response->get_error_message());
     }
-    $data = json_decode(wp_remote_retrieve_body($response), true);
+    $raw_body = wp_remote_retrieve_body($response);
+    $data = json_decode($raw_body, true);
     // Extract the actual response text for the frontend
     $bot_response = isset($data['message']) ? $data['message'] : (isset($data['response']) ? $data['response'] : '');
-    if (!$bot_response) {
-        wp_send_json_error('No response from API');
+    if (!$bot_response || trim($bot_response) === '') {
+        $debug_info = array(
+            'error' => 'No response from API',
+            'api_raw_body' => $raw_body,
+            'api_decoded' => $data,
+            'request_body' => $body
+        );
+        wp_send_json_error($debug_info);
     }
     // Always return response as an object with role and content
     wp_send_json_success(array('response' => array('role' => 'assistant', 'content' => $bot_response)));
